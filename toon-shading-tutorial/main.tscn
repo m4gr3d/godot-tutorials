@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://ys4bihubvx40"]
+
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_ig7tw"]
+[ext_resource type="Shader" uid="uid://cgf0gsqeo4400" path="res://toon_shading.gdshader" id="2_0xm2m"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_0xm2m"]
+sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
+
+[sub_resource type="Environment" id="Environment_h2yge"]
+background_mode = 2
+sky = SubResource("Sky_0xm2m")
+glow_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0xm2m"]
+render_priority = 0
+shader = ExtResource("2_0xm2m")
+shader_parameter/albedo = Color(0.7490196, 0.46666667, 0.4392157, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ig7tw"]
+material = SubResource("ShaderMaterial_0xm2m")
+radius = 0.2
+height = 0.4
+
+[node name="Main" type="Node3D" unique_id=1748839405]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=625001693]
+environment = SubResource("Environment_h2yge")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=410498212]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="StartXR" parent="." unique_id=421350585 instance=ExtResource("1_ig7tw")]
+enable_passthrough = true
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=934191594]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1332123506]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.70834625)
+
+[node name="Game" type="Node3D" parent="." unique_id=1759937886]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Game" unique_id=1146208979]
+mesh = SubResource("SphereMesh_ig7tw")
